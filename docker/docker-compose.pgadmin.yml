@@ -1,0 +1,26 @@
+version: '3'
+
+name: 'pgadmin'
+
+networks:
+  PROJECTNAME-network:
+    name: PROJECTNAME_PROJECTNAME-network
+    external: true
+
+volumes:
+  pgadmin-storage:
+
+services:
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    restart: always
+    networks:
+      - PROJECTNAME-network
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    volumes:
+      - pgadmin-storage:/var/lib/pgadmin
+    ports:
+      - '5050:80'

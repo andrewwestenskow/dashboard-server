@@ -1,0 +1,54 @@
+version: '3'
+
+name: 'PROJECTNAME'
+
+networks:
+  PROJECTNAME-network:
+    driver: bridge
+
+volumes:
+  PROJECTNAME-postgres:
+  PROJECTNAME-redis:
+
+services:
+  redis:
+    image: redis:latest
+    container_name: PROJECTNAME-redis
+    restart: unless-stopped
+    networks:
+      - PROJECTNAME-network
+    volumes:
+      - PROJECTNAME-redis:/data
+    expose:
+      - '6379'
+  postgres:
+    image: postgres:latest
+    container_name: PROJECTNAME-postgres
+    restart: unless-stopped
+    networks:
+      - PROJECTNAME-network
+    volumes:
+      - PROJECTNAME-postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    expose:
+      - ${POSTGRES_PORT}
+  server:
+    image: node:alpine
+    container_name: server
+    restart: unless-stopped
+    networks:
+      - PROJECTNAME-network
+    working_dir: /usr/PROJECTNAME
+    command: yarn run dev
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    volumes:
+      - .:/usr/PROJECTNAME
+      - ./src/db/migrations:/usr/PROJECTNAME/src/db/migrations:rw
+    depends_on:
+      - postgres
+      # - redis
+    env_file:
+      - .env
