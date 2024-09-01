@@ -1,34 +1,34 @@
 version: '3'
 
-name: 'PROJECTNAME'
+name: 'dashbaord'
 
 networks:
-  PROJECTNAME-network:
+  dashbaord-network:
     driver: bridge
 
 volumes:
-  PROJECTNAME-postgres:
-  PROJECTNAME-redis:
+  dashbaord-postgres:
+  dashbaord-redis:
 
 services:
   redis:
     image: redis:latest
-    container_name: PROJECTNAME-redis
+    container_name: dashbaord-redis
     restart: unless-stopped
     networks:
-      - PROJECTNAME-network
+      - dashbaord-network
     volumes:
-      - PROJECTNAME-redis:/data
+      - dashbaord-redis:/data
     expose:
       - '6379'
   postgres:
     image: postgres:latest
-    container_name: PROJECTNAME-postgres
+    container_name: dashbaord-postgres
     restart: unless-stopped
     networks:
-      - PROJECTNAME-network
+      - dashbaord-network
     volumes:
-      - PROJECTNAME-postgres:/var/lib/postgresql/data
+      - dashbaord-postgres:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
@@ -39,14 +39,14 @@ services:
     container_name: server
     restart: unless-stopped
     networks:
-      - PROJECTNAME-network
-    working_dir: /usr/PROJECTNAME
+      - dashbaord-network
+    working_dir: /usr/dashbaord
     command: yarn run dev
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
     volumes:
-      - .:/usr/PROJECTNAME
-      - ./src/db/migrations:/usr/PROJECTNAME/src/db/migrations:rw
+      - .:/usr/dashbaord
+      - ./src/db/migrations:/usr/dashbaord/src/db/migrations:rw
     depends_on:
       - postgres
       # - redis

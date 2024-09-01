@@ -3,8 +3,8 @@ version: '3'
 name: 'pgadmin'
 
 networks:
-  PROJECTNAME-network:
-    name: PROJECTNAME_PROJECTNAME-network
+  dashbaord-network:
+    name: dashbaord_dashbaord-network
     external: true
 
 volumes:
@@ -16,7 +16,7 @@ services:
     image: dpage/pgadmin4
     restart: always
     networks:
-      - PROJECTNAME-network
+      - dashbaord-network
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: root

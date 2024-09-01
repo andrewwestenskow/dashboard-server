@@ -13,7 +13,7 @@ First things first, run a migration to set up your db.
   SERVER_PORT
 ```
 
-2. Find and replace PROJECTNAME with the name of your project
+2. Find and replace dashbaord with the name of your project
 
 3. Change the package name in the package.json
 

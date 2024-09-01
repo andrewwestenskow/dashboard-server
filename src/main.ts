@@ -30,8 +30,8 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   const config = new DocumentBuilder()
-    .setTitle('PROJECTNAME')
-    .setDescription('A server for PROJECTNAME')
+    .setTitle('dashbaord')
+    .setDescription('A server for dashbaord')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
