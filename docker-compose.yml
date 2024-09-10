@@ -1,34 +1,34 @@
 version: '3'
 
-name: 'dashbaord'
+name: 'dashboard'
 
 networks:
-  dashbaord-network:
+  dashboard-network:
     driver: bridge
 
 volumes:
-  dashbaord-postgres:
-  dashbaord-redis:
+  dashboard-postgres:
+  dashboard-redis:
 
 services:
   redis:
     image: redis:latest
-    container_name: dashbaord-redis
+    container_name: dashboard-redis
     restart: unless-stopped
     networks:
-      - dashbaord-network
+      - dashboard-network
     volumes:
-      - dashbaord-redis:/data
+      - dashboard-redis:/data
     expose:
       - '6379'
   postgres:
     image: postgres:latest
-    container_name: dashbaord-postgres
+    container_name: dashboard-postgres
     restart: unless-stopped
     networks:
-      - dashbaord-network
+      - dashboard-network
     volumes:
-      - dashbaord-postgres:/var/lib/postgresql/data
+      - dashboard-postgres:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
@@ -39,14 +39,14 @@ services:
     container_name: server
     restart: unless-stopped
     networks:
-      - dashbaord-network
-    working_dir: /usr/dashbaord
+      - dashboard-network
+    working_dir: /usr/dashboard
     command: yarn run dev
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
     volumes:
-      - .:/usr/dashbaord
-      - ./src/db/migrations:/usr/dashbaord/src/db/migrations:rw
+      - .:/usr/dashboard
+      - ./src/db/migrations:/usr/dashboard/src/db/migrations:rw
     depends_on:
       - postgres
       # - redis

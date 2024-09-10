@@ -19,7 +19,8 @@
       "~modules/*": ["modules/*"],
       "~responses/*": ["common/responses/*"],
       "~middleware": ["common/middleware"],
-      "~types": ["common/types"]
+      "~types": ["common/types"],
+      "~constants": ["common/constants"]
     },
     "incremental": true,
     "skipLibCheck": true,
